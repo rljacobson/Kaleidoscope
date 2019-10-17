@@ -55,6 +55,14 @@ namespace kaleidoscope {
 
 template<typename _DeviceDescription>
 class Device {
+ private:
+  class DummyIO {
+   public:
+    DummyIO() {}
+  };
+
+  static DummyIO dummy_io_;
+
  public:
 
   typedef typename _DeviceDescription::KeyScanner KeyScanner;
@@ -67,6 +75,7 @@ class Device {
   static constexpr uint8_t matrix_rows = _DeviceDescription::KeyScannerDescription::matrix_rows;
   static constexpr uint8_t matrix_columns = _DeviceDescription::KeyScannerDescription::matrix_columns;
   static constexpr typename _DeviceDescription::LEDs::LedCountType led_count = _DeviceDescription::LEDs::led_count;
+  static constexpr auto &focus_interface = dummy_io_;
 
   /**
    * @returns the number of keys on the keyboard.
@@ -463,5 +472,6 @@ class Device {
   MCU mcu_;
   BootLoader bootloader_;
   Storage storage_;
+
 };
 }
